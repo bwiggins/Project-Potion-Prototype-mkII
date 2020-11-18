@@ -1,0 +1,4 @@
+toolType,ingredientA,ingredientB,ingredientOutput,craftingActionType
+mortar,lumi_root,,luminous_dust,grind
+cauldron,ANY_LIQUID,luminous_dust,luminous_slime,stir
+flame,luminous_slime,,energy_core,hover
