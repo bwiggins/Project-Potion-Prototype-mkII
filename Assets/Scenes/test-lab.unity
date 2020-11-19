@@ -1151,11 +1151,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e7388ab237da5147bf2642d1554fc11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  promptText: 
+  promptTitle: 
   preRequisite: []
   dialog: []
   endDialog: 
   itemReward: 
+  menu: {fileID: 0}
+  showCrafting: 0
 --- !u!4 &259731248 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4193081536311086, guid: b270c94d4e8ef96489c214caeb48ea16, type: 3}
@@ -2179,6 +2181,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   promptTitle: Mortar
+  preRequisite: []
+  dialog: []
+  endDialog: 
+  itemReward: 
+  menu: {fileID: 0}
+  showCrafting: 0
+  toolType: mortar
 --- !u!1001 &627338285
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4124,12 +4133,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e7388ab237da5147bf2642d1554fc11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  promptText: spider thing
+  promptTitle: 
   preRequisite: []
   dialog:
   - hi
   endDialog: bye
   itemReward: spider hair
+  menu: {fileID: 0}
+  showCrafting: 0
 --- !u!65 &1110531083
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5586,12 +5597,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e7388ab237da5147bf2642d1554fc11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  promptText: Abdullah
+  promptTitle: 
   preRequisite: []
   dialog:
   - hello
   endDialog: later
   itemReward: 
+  menu: {fileID: 0}
+  showCrafting: 0
 --- !u!1 &1405427817 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5525074161262582793, guid: 6eceacfa80d5c1a439eff7018aaf89ab, type: 3}
@@ -5623,6 +5636,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   promptTitle: Ingredient List
+  preRequisite: []
+  dialog: []
+  endDialog: 
+  itemReward: 
+  menu: {fileID: 0}
+  showCrafting: 0
+  toolType: 
 --- !u!4 &1406421688 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7979559664150284589, guid: 9695eaedb278f9d428e902d1b076c5a7, type: 3}
@@ -6391,8 +6411,7 @@ MonoBehaviour:
   keyDialog: space
   promptTool: {fileID: 1993623456}
   promptDialog: {fileID: 947318609}
-  menu: {fileID: 1807505345}
-  showCrafting: 0
+  promptName: Alert
   menuPause: {fileID: 638624933}
 --- !u!4 &1703460091 stripped
 Transform:
