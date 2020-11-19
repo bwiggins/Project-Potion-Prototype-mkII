@@ -53,6 +53,7 @@ public class CraftingTool : Interaction
 
     public override string activate()
     {
+        UnityEngine.Debug.Log("getting: " + itemReward);
         return base.activate();
     }
 

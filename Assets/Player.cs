@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    //singleton
+    private static Player _instance;
+    public static Player Instance { get { return _instance; } }
+
+
     public Animator anim_ref;
 
     private bool isInsideTrigger = false;
@@ -15,6 +20,16 @@ public class Player : MonoBehaviour
     public CharacterController controller;
 
     public float speed = 10f;
+
+    private void Awake()
+    {
+        //singleton init
+        if (_instance != null && _instance != this)
+            Destroy(this.gameObject);
+        else
+            _instance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {

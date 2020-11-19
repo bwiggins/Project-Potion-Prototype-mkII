@@ -95,10 +95,15 @@ public class UI_Lab : MonoBehaviour
         
     }*/
 
+    //TODO: what a mess that the ui controller has to talk between the action and the player to get them inventory options. THE UI SHOULD ONLY BE REACTING TO THESE THINGS, NOT CONTROLLING THEM
     public void promptPress(Interaction inter)
     {
+        Inventory invRef = Player.Instance.gameObject.GetComponent<Inventory>();
+
         actionChosen = inter;
-        actionChosen.activate();
+        string result = actionChosen.activate();
+        if(result != null)
+            invRef.Items.Add(result);
     }
 
     public void setActionTool(CraftingTool tool)
