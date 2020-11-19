@@ -57,7 +57,7 @@ public class Interaction : MonoBehaviour
     /// interact
     /// </summary>
     /// <returns>returns a reward if given, otherwise empty string</returns>
-    public string activate()
+    public virtual string activate()
     {
         showCrafting = true;
         UnityEngine.Debug.Log("activate");
