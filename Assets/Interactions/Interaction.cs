@@ -10,6 +10,12 @@ public class Interaction : MonoBehaviour
     /// </summary>
     public string promptTitle;
 
+    protected bool _isReady = false;
+    public bool isReady { get { return _isReady; } protected set { _isReady = value; } }
+
+    protected bool _isActive = false;
+    public bool isActive { get { return _isActive; } protected set { _isActive = value; } }
+
     public List<string> preRequisite;
 
     //for tracking where in the dialog it is currently
@@ -59,6 +65,7 @@ public class Interaction : MonoBehaviour
     /// <returns>returns a reward if given, otherwise empty string</returns>
     public virtual string activate()
     {
+        PlayerCamera.Instance.setTarget(this.gameObject);
         showCrafting = true;
         UnityEngine.Debug.Log("activate");
 
@@ -81,15 +88,19 @@ public class Interaction : MonoBehaviour
         }
     }
 
-    protected virtual void OnTriggerStay(Collider other)
+    public virtual void deactivate()
     {
-        Player player = other.GetComponent<Player>();
-        if (player)
-            UI_Lab.Instance.setActionDialog(this);
-    }
+        PlayerCamera.Instance.setTarget(null);
+    } 
 
-    protected virtual void OnTriggerExit(Collider other)
+    public virtual void setReady(bool readyState)
     {
-        UI_Lab.Instance.setActionDialog(null);
+        isReady = readyState;
+
+        if (isReady)
+        {
+            UnityEngine.Debug.Log("ready");
+            UI_Lab.Instance.setActionDialog(this);
+        }
     }
 }

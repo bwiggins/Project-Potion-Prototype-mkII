@@ -39,22 +39,21 @@ public class CraftingTool : Interaction
         
     }
 
-    protected override void OnTriggerStay(Collider other)
-    {
-        Player player = other.GetComponent<Player>();
-        if (player)
-            UI_Lab.Instance.setActionTool(this);
-    }
-
-    protected override void OnTriggerExit(Collider other)
-    {
-        UI_Lab.Instance.setActionTool(null);
-    }
-
     public override string activate()
     {
         UnityEngine.Debug.Log("getting: " + itemReward);
         return base.activate();
+    }
+
+    public override void setReady(bool readyState)
+    {
+        isReady = readyState;
+
+        if (isReady)
+        {
+            UnityEngine.Debug.Log("ready (tool)");
+            UI_Lab.Instance.setActionTool(this);
+        }
     }
 
 }

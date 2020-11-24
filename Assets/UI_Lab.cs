@@ -29,10 +29,9 @@ public class UI_Lab : MonoBehaviour
     public GameObject promptDialog;
 
     [Space(10)]
-
-    private Interaction actionChosen;
     private Interaction actionDialog;
     private CraftingTool actionTool;
+
     public string promptName = "Alert";
 
     //a ref to the object that is prompting
@@ -57,7 +56,7 @@ public class UI_Lab : MonoBehaviour
         textref.text = promptName;
 
         //activate
-        if (promptDialog.activeSelf && Input.GetKeyDown(keyDialog))
+        /*if (promptDialog.activeSelf && Input.GetKeyDown(keyDialog))
         {
             promptPress(actionDialog);
         }
@@ -65,7 +64,7 @@ public class UI_Lab : MonoBehaviour
         else if (promptTool.activeSelf && Input.GetKeyDown(keyTool))
         {
             promptPress(actionTool);
-        }
+        }*/
 
         if (actionDialog)
             promptDialog.SetActive(true);
@@ -96,7 +95,7 @@ public class UI_Lab : MonoBehaviour
     }*/
 
     //TODO: what a mess that the ui controller has to talk between the action and the player to get them inventory options. THE UI SHOULD ONLY BE REACTING TO THESE THINGS, NOT CONTROLLING THEM
-    public void promptPress(Interaction inter)
+    /*public void promptPress(Interaction inter)
     {
         Inventory invRef = Player.Instance.gameObject.GetComponent<Inventory>();
 
@@ -104,7 +103,7 @@ public class UI_Lab : MonoBehaviour
         string result = actionChosen.activate();
         if(result != null)
             invRef.Items.Add(result);
-    }
+    }*/
 
     public void setActionTool(CraftingTool tool)
     {

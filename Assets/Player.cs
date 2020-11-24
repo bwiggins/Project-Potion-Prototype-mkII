@@ -8,11 +8,14 @@ public class Player : MonoBehaviour
     private static Player _instance;
     public static Player Instance { get { return _instance; } }
 
-
-    public Animator anim_ref;
+    private Interaction actionChosen;
+    private Interaction actionDialog;
+    private CraftingTool actionTool;
 
     private bool isInsideTrigger = false;
-    private bool isCrafting = false;
+
+
+    public Animator anim_ref;
 
     [SerializeField]
     private GameObject body;
@@ -51,7 +54,7 @@ public class Player : MonoBehaviour
         UI_ref.showCrafting = isCrafting;*/
 
         //cant move if crafting
-        if (!isCrafting)
+        //if (currentInteraction == null)
         {
             Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             Vector3 direction = new Vector3(move.x, 0, move.z) + body.transform.position;
@@ -62,19 +65,68 @@ public class Player : MonoBehaviour
         }
 
         //toggle crafting
-        if (isInsideTrigger && Input.GetKeyDown("space"))
+        /*if (isInsideTrigger && Input.GetKeyDown("space"))
         {
-            if (isCrafting)
+            if (currentInteraction != null)
             {
-                isCrafting = false;
+                currentInteraction = null;
                 CraftingModeManager.pauseSet(false);
             }
             else
             {
-                isCrafting = true;
+                //isCrafting = true;
                 CraftingModeManager.pauseSet(true);
             }
-        }
+        }*/
 
+        //turn off if this is empty
+        //TODO: also control turning on if not
+        if (actionDialog == null)
+            UI_Lab.Instance.setActionDialog(null);
+
+        //turn off if this is empty
+        //TODO: also control turning on if not
+        if (actionTool == null)
+            UI_Lab.Instance.setActionTool(null);
+    }
+
+    protected virtual void OnTriggerStay(Collider other)
+    {
+        Interaction interaction = other.GetComponent<Interaction>();
+        if (interaction)//has any sort of interaction component
+        {
+            interaction.setReady(true);
+
+            CraftingTool craftInteraction = other.GetComponent<CraftingTool>();
+            if (craftInteraction)//if it specifically is a craftingTool Component
+            {
+                //UI_Lab.Instance.setActionDialog(element);
+                actionTool = craftInteraction;
+            }
+            else//regular old interactive
+                actionDialog = interaction;
+        }
+    }
+
+    protected virtual void OnTriggerExit(Collider other)
+    {
+        //UI_Lab.Instance.setActionDialog(null);
+        //currentInteraction = null;
+
+        //checks if the trigger being left, belonged to any of the interactions that the player was expecting to communicate with.
+
+        //if it has an interactive component
+        Interaction interaction = other.GetComponent<Interaction>();
+        if (interaction)
+        {
+            interaction.setReady(false);
+
+            if (interaction == actionDialog)
+                actionDialog = null;
+
+            CraftingTool craftInteraction = other.GetComponent<CraftingTool>();
+            if (craftInteraction == actionTool)
+                actionTool = null;
+        }
     }
 }
