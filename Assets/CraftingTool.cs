@@ -51,7 +51,6 @@ public class CraftingTool : Interaction
 
         if (isReady)
         {
-            UnityEngine.Debug.Log("ready (tool)");
             UI_Lab.Instance.setActionTool(this);
         }
     }

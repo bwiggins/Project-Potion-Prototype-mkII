@@ -66,6 +66,7 @@ public class Interaction : MonoBehaviour
     public virtual string activate()
     {
         PlayerCamera.Instance.setTarget(this.gameObject);
+        //PlayerCamera.Instance.setTarget(null);
         showCrafting = true;
         UnityEngine.Debug.Log("activate");
 
@@ -73,14 +74,18 @@ public class Interaction : MonoBehaviour
         if (currentDialogID >= dialog.Count)
             isFinished = true;
 
+        UnityEngine.Debug.Log(currentDialogID + " " + dialog.Count);
+
         if (isFinished)
         {
-            return itemReward;
-            //display end dialog
+            deactivate();
+
+            return itemReward;           
         }
         else
         {
             //display ID dialog
+            UI_Lab.Instance.showScreen(dialog[currentDialogID]);
 
             //set up the next screen to show
             currentDialogID++;
@@ -90,6 +95,12 @@ public class Interaction : MonoBehaviour
 
     public virtual void deactivate()
     {
+        //testing, but remove these later
+        currentDialogID = 0;
+        isFinished = false;
+
+
+        UI_Lab.Instance.hideScreen();
         PlayerCamera.Instance.setTarget(null);
     } 
 
@@ -99,7 +110,6 @@ public class Interaction : MonoBehaviour
 
         if (isReady)
         {
-            UnityEngine.Debug.Log("ready");
             UI_Lab.Instance.setActionDialog(this);
         }
     }

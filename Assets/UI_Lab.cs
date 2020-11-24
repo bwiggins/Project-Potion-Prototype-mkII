@@ -20,13 +20,11 @@ public class UI_Lab : MonoBehaviour
             _instance = this;
     }
 
-    [Header("Action buttons")]
-    [SerializeField] private string keyTool = "e";
-    [SerializeField] private string keyDialog = "space";
-
     [Header("UI Element Refs")]
     public GameObject promptTool;
     public GameObject promptDialog;
+
+    public GameObject screenDialog;
 
     [Space(10)]
     private Interaction actionDialog;
@@ -38,8 +36,6 @@ public class UI_Lab : MonoBehaviour
     //so that I can call activate on it, from a button press func in this
     
 
-    private Text textref;
-
 
 
     public GameObject menuPause;
@@ -47,13 +43,12 @@ public class UI_Lab : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        textref = promptDialog.GetComponentInChildren<Text>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        textref.text = promptName;
 
         //activate
         /*if (promptDialog.activeSelf && Input.GetKeyDown(keyDialog))
@@ -77,12 +72,12 @@ public class UI_Lab : MonoBehaviour
             promptTool.SetActive(false);
 
         //if there is a valid possible tool action AND the relevant button is pressed
-        if(Input.GetKeyDown(keyTool) && actionTool)
+        /*if(Input.GetKeyDown(keyTool) && actionTool)
         {
             //placeholder testing csv data
 
 
-        }
+        }*/
     }
 
     /*
@@ -117,5 +112,19 @@ public class UI_Lab : MonoBehaviour
         actionDialog = dialog;
         if(dialog)
             promptDialog.GetComponentInChildren<Text>().text = dialog.promptTitle;
+    }
+
+    public void showScreen(string t)
+    {
+        Text text = screenDialog.GetComponentInChildren<Text>();
+        if (text)
+            text.text = t;
+
+        screenDialog.SetActive(true);
+    }
+
+    public void hideScreen()
+    {
+        screenDialog.SetActive(false);
     }
 }

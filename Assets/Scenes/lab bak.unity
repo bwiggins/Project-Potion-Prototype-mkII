@@ -597,7 +597,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   promptTitle: Grind
   preRequisite: []
-  dialog: []
+  dialog:
+  - This is an example tool, used to refine certain ingredients into other ones.
+    Many different tool options would be available at any given time.
   endDialog: 
   itemReward: 
   menu: {fileID: 0}
@@ -762,6 +764,7 @@ Transform:
   - {fileID: 966877276}
   - {fileID: 1297368755}
   - {fileID: 902995946}
+  - {fileID: 1789893193}
   m_Father: {fileID: 1299448332}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -777,6 +780,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d90a486024942414789cbec458d3159f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  keyTool: e
+  keyDialog: space
   anim_ref: {fileID: 1297368756}
   body: {fileID: 1297368754}
   controller: {fileID: 105770473}
@@ -2777,6 +2782,85 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8743666500162379662, guid: 40ab4d9af8fa1764a9cf9fc4d56498c5, type: 3}
   m_PrefabInstance: {fileID: 910671186}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &324017423
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 324017424}
+  - component: {fileID: 324017426}
+  - component: {fileID: 324017425}
+  m_Layer: 0
+  m_Name: Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &324017424
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 324017423}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1807505346}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -52.3, y: -62.67}
+  m_SizeDelta: {x: 1418.1442, y: 324.6737}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &324017425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 324017423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: New Text
+--- !u!222 &324017426
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 324017423}
+  m_CullTransparentMesh: 0
 --- !u!1001 &327420839
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3360,7 +3444,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   promptTitle: Ingredients List
   preRequisite: []
-  dialog: []
+  dialog:
+  - This is ingredient storage. All your ingredients would show up here from exploring.
   endDialog: 
   itemReward: 
   menu: {fileID: 0}
@@ -5530,17 +5615,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 371997815955144814, guid: f2fe0aaa3293af94eb529ae98005c6d4, type: 3}
   m_PrefabInstance: {fileID: 3179555280809318460}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &876301842 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7586709415539472618, guid: f2fe0aaa3293af94eb529ae98005c6d4, type: 3}
-  m_PrefabInstance: {fileID: 3179555280809318460}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72b5005341f99f944b41b0d6c7816aae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &893630367
 GameObject:
   m_ObjectHideFlags: 0
@@ -5736,7 +5810,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 902995943}
   m_LocalRotation: {x: 0.3420201, y: 0, z: 0, w: 0.9396927}
-  m_LocalPosition: {x: 0, y: 11, z: -12}
+  m_LocalPosition: {x: 0, y: 8.789, z: -9.365}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 105770474}
@@ -7189,7 +7263,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   promptTitle: Crafting Notes
   preRequisite: []
-  dialog: []
+  dialog:
+  - Players can find tomes of forgotten potion knowledge throughout the shop, but
+    they will also have a written log of their own discoveries, to reflect back on.
   endDialog: 
   itemReward: 
   menu: {fileID: 0}
@@ -9282,7 +9358,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   promptTitle: Bottling
   preRequisite: []
-  dialog: []
+  dialog:
+  - The vial rack would be a selection of mixtures the players made from the cauldron.
+    Players would have a set number of potions they can craft here, and they can
+    only choose 3 different mixtures to combine, and see what they get.
   endDialog: 
   itemReward: 
   menu: {fileID: 0}
@@ -9401,7 +9480,8 @@ MonoBehaviour:
   promptTitle: Abdullah
   preRequisite: []
   dialog:
-  - hello
+  - Abdullah comments on the player's efforts, and specifically gives insight into
+    the nature and potency of their creations.
   endDialog: later
   itemReward: 
   menu: {fileID: 0}
@@ -10427,6 +10507,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4308944480718410, guid: f7769b1fc067cae44b63ccdcc8288127, type: 3}
   m_PrefabInstance: {fileID: 911129161}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1562924060 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7586709415539472618, guid: f2fe0aaa3293af94eb529ae98005c6d4, type: 3}
+  m_PrefabInstance: {fileID: 244267169}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72b5005341f99f944b41b0d6c7816aae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1580514199
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10882,10 +10973,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35acfe37b7a93a7418bdac33ce52c4b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keyTool: e
-  keyDialog: space
   promptTool: {fileID: 1993623456}
   promptDialog: {fileID: 947318609}
+  screenDialog: {fileID: 1807505345}
   promptName: Alert
   menuPause: {fileID: 638624933}
 --- !u!4 &1690284155 stripped
@@ -11431,6 +11521,102 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 931110c847eea4007b670ae0ac1e55ff, type: 3}
+--- !u!1 &1789893192
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1789893193}
+  - component: {fileID: 1789893196}
+  - component: {fileID: 1789893195}
+  - component: {fileID: 1789893194}
+  m_Layer: 0
+  m_Name: Backup Camera
+  m_TagString: MainCamera
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1789893193
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1789893192}
+  m_LocalRotation: {x: 0.3420201, y: 0, z: 0, w: 0.9396927}
+  m_LocalPosition: {x: 0, y: 8.789, z: -9.365}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 105770474}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 40, y: 0, z: 0}
+--- !u!114 &1789893194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1789893192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21a3f5a7bae47734594f68f32b0bbd64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!81 &1789893195
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1789893192}
+  m_Enabled: 1
+--- !u!20 &1789893196
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1789893192}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 85
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 41
+  orthographic: 0
+  orthographic size: 7
+  m_Depth: 100
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
 --- !u!1001 &1793892925
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11614,6 +11800,7 @@ RectTransform:
   m_LocalScale: {x: 0.7992188, y: 1.275, z: 1}
   m_Children:
   - {fileID: 1804094583}
+  - {fileID: 324017424}
   m_Father: {fileID: 1678379553}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11996,7 +12183,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   promptTitle: Fuel
   preRequisite: []
-  dialog: []
+  dialog:
+  - This fire would require fuel, to keep the cauldron operating. Some types of fuel
+    (found exploring, or crafted later) would produce better results in the cauldron,
+    but wooden logs are always freely available as a backup.
   endDialog: 
   itemReward: 
   menu: {fileID: 0}
@@ -12566,7 +12756,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   promptTitle: Brew
   preRequisite: []
-  dialog: []
+  dialog:
+  - This is the cauldron, where many ingredietns are thrown in together in hopes
+    of making unique mixtures.
   endDialog: 
   itemReward: 
   menu: {fileID: 0}
@@ -13253,7 +13445,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiRef: {fileID: 1678379557}
   clutterList:
-  - {fileID: 876301842}
+  - {fileID: 1562924060}
   - {fileID: 35530766}
   - {fileID: 1521733835}
   - {fileID: 1305110566}

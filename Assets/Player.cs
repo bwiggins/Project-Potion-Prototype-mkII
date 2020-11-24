@@ -8,12 +8,14 @@ public class Player : MonoBehaviour
     private static Player _instance;
     public static Player Instance { get { return _instance; } }
 
-    private Interaction actionChosen;
+    private Interaction actionChosen = null;
     private Interaction actionDialog;
     private CraftingTool actionTool;
 
-    private bool isInsideTrigger = false;
-
+    //private bool isInsideTrigger = false;
+    [Header("Action buttons")]
+    [SerializeField] private string keyTool = "e";
+    [SerializeField] private string keyDialog = "space";
 
     public Animator anim_ref;
 
@@ -53,8 +55,8 @@ public class Player : MonoBehaviour
             UI_ref.showContextAlert = isInsideTrigger;
         UI_ref.showCrafting = isCrafting;*/
 
-        //cant move if crafting
-        //if (currentInteraction == null)
+        //cant move if locked into an action
+        if (actionChosen == null)
         {
             Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             Vector3 direction = new Vector3(move.x, 0, move.z) + body.transform.position;
@@ -83,11 +85,15 @@ public class Player : MonoBehaviour
         //TODO: also control turning on if not
         if (actionDialog == null)
             UI_Lab.Instance.setActionDialog(null);
+        else if (Input.GetKeyDown(keyDialog))
+            actionDialog.activate();
 
         //turn off if this is empty
         //TODO: also control turning on if not
         if (actionTool == null)
             UI_Lab.Instance.setActionTool(null);
+        else if (Input.GetKeyDown(keyTool))
+            actionTool.activate();
     }
 
     protected virtual void OnTriggerStay(Collider other)
