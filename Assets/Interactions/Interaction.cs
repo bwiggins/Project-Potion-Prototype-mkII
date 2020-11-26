@@ -29,7 +29,7 @@ public class Interaction : MonoBehaviour
     public GameObject menu;
     public bool showCrafting = false;
 
-    private void Awake()
+    protected void Awake()
     {
         menu.SetActive(false);
     }
@@ -44,7 +44,6 @@ public class Interaction : MonoBehaviour
     void Update()
     {
         menu.SetActive(showCrafting);
-        
     }
 
     /*
@@ -65,10 +64,12 @@ public class Interaction : MonoBehaviour
     /// <returns>returns a reward if given, otherwise empty string</returns>
     public virtual string activate()
     {
+        isActive = true;
+
+
         PlayerCamera.Instance.setTarget(this.gameObject);
         //PlayerCamera.Instance.setTarget(null);
         showCrafting = true;
-        UnityEngine.Debug.Log("activate");
 
         //checks if we've made it through all dialog
         if (currentDialogID >= dialog.Count)
@@ -95,6 +96,9 @@ public class Interaction : MonoBehaviour
 
     public virtual void deactivate()
     {
+        isActive = false;
+
+
         //testing, but remove these later
         currentDialogID = 0;
         isFinished = false;

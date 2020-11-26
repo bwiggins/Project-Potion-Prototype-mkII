@@ -602,9 +602,11 @@ MonoBehaviour:
     Many different tool options would be available at any given time.
   endDialog: 
   itemReward: 
-  menu: {fileID: 0}
+  menu: {fileID: 1807505345}
   showCrafting: 0
   toolType: mortar
+  steps:
+  - space
 --- !u!65 &61407409
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4266,6 +4268,7 @@ MonoBehaviour:
   menu: {fileID: 0}
   showCrafting: 0
   toolType: mortar
+  steps: []
 --- !u!1001 &627338285
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4357,7 +4360,7 @@ RectTransform:
   - {fileID: 796784699}
   - {fileID: 1140329297}
   m_Father: {fileID: 1678379553}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -9367,6 +9370,7 @@ MonoBehaviour:
   menu: {fileID: 0}
   showCrafting: 0
   toolType: Bottle
+  steps: []
 --- !u!4 &1386240587 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3668166046016738983, guid: 1b6acb4ec7e010d44ba8bc144d5d7235, type: 3}
@@ -9524,6 +9528,7 @@ MonoBehaviour:
   menu: {fileID: 0}
   showCrafting: 0
   toolType: 
+  steps: []
 --- !u!4 &1406421688 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7979559664150284589, guid: 9695eaedb278f9d428e902d1b076c5a7, type: 3}
@@ -10889,8 +10894,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 1807505346}
   - {fileID: 638624934}
+  - {fileID: 1807505346}
   - {fileID: 1993623457}
   - {fileID: 947318610}
   m_Father: {fileID: 0}
@@ -11802,7 +11807,7 @@ RectTransform:
   - {fileID: 1804094583}
   - {fileID: 324017424}
   m_Father: {fileID: 1678379553}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -12192,6 +12197,7 @@ MonoBehaviour:
   menu: {fileID: 0}
   showCrafting: 0
   toolType: stove
+  steps: []
 --- !u!4 &1857242021 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5876317230815310939, guid: 931110c847eea4007b670ae0ac1e55ff, type: 3}
@@ -12761,9 +12767,10 @@ MonoBehaviour:
     of making unique mixtures.
   endDialog: 
   itemReward: 
-  menu: {fileID: 0}
+  menu: {fileID: 1807505345}
   showCrafting: 0
   toolType: cauldron
+  steps: []
 --- !u!65 &1987725487
 BoxCollider:
   m_ObjectHideFlags: 0

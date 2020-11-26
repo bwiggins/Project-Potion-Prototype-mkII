@@ -8,9 +8,13 @@ public class CraftingTool : Interaction
     public string toolType;
     private List<Recipe> recipes;
 
-    private void Awake()
+    [SerializeField]
+    private List<string> steps;//list of steps in the crafting
+    private int currentStep = 0;//current step
+
+    protected void Awake()
     {
-       
+        base.Awake();
     }
 
     // Start is called before the first frame update
@@ -36,7 +40,22 @@ public class CraftingTool : Interaction
     // Update is called once per frame
     void Update()
     {
-        
+        if (isActive)
+        {
+            if (steps.Count > currentStep)
+            {
+                if (Input.GetKeyDown(steps[currentStep]))
+                {
+                    UnityEngine.Debug.Log("completed step " + currentStep + " (" + steps[currentStep] + ")");
+                    currentStep++;
+                }
+            }
+            else
+            {
+                UnityEngine.Debug.Log("no more steps");
+                deactivate();
+            }
+        }
     }
 
     public override string activate()
