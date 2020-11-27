@@ -20,6 +20,14 @@ public class UI_Lab : MonoBehaviour
             _instance = this;
     }
 
+    [Header("Buttons")]
+    [SerializeField] private string accept;
+    [SerializeField] private string decline;
+    [SerializeField] private string pause;
+    [SerializeField] private string notes;
+    [SerializeField] private string engage_dialog;
+    [SerializeField] private string engage_tool;
+
     [Header("UI Element Refs")]
     public GameObject startingPopUp;
 
@@ -78,6 +86,8 @@ public class UI_Lab : MonoBehaviour
             promptTool.SetActive(true);
         else
             promptTool.SetActive(false);
+
+
 
         //if there is a valid possible tool action AND the relevant button is pressed
         /*if(Input.GetKeyDown(keyTool) && actionTool)
