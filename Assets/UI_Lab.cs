@@ -21,10 +21,12 @@ public class UI_Lab : MonoBehaviour
     }
 
     [Header("UI Element Refs")]
+    public GameObject startingPopUp;
+
     public GameObject promptTool;
     public GameObject promptDialog;
 
-    public GameObject screenDialog;
+    public GameObject screenPopUp;
 
     [Space(10)]
     private Interaction actionDialog;
@@ -43,12 +45,18 @@ public class UI_Lab : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (startingPopUp != null)
+            showScreen(startingPopUp);
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown("space") && screenPopUp != null)
+        {
+        hideScreen();
+        }
 
         //activate
         /*if (promptDialog.activeSelf && Input.GetKeyDown(keyDialog))
@@ -116,15 +124,21 @@ public class UI_Lab : MonoBehaviour
 
     public void showScreen(string t)
     {
-        Text text = screenDialog.GetComponentInChildren<Text>();
+        Text text = screenPopUp.GetComponentInChildren<Text>();
         if (text)
             text.text = t;
 
-        screenDialog.SetActive(true);
+        screenPopUp.SetActive(true);
+    }
+
+    public void showScreen(GameObject go)
+    {
+        screenPopUp = go;
+        screenPopUp.SetActive(true);
     }
 
     public void hideScreen()
     {
-        screenDialog.SetActive(false);
+        screenPopUp.SetActive(false);
     }
 }

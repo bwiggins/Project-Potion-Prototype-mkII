@@ -26,6 +26,8 @@ public class Player : MonoBehaviour
 
     public float speed = 10f;
 
+    public List<string> inventory;
+
     private void Awake()
     {
         //singleton init
