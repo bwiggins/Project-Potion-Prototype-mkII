@@ -5,7 +5,10 @@ using UnityEngine;
 public class CraftingOperation : MonoBehaviour
 {
     [SerializeField]
-    private string name;
+    private string displayName;
+
+    [SerializeField]
+    private GameObject UI;
 
     // Start is called before the first frame update
     void Start()
@@ -17,5 +20,11 @@ public class CraftingOperation : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void setState(bool isActive)
+    {
+        if (UI)
+            UI.SetActive(isActive);
     }
 }

@@ -47,9 +47,13 @@ public class CraftingModeManager : MonoBehaviour
 
         if (Input.GetKeyDown("1"))
         {
+            operations[currOpID].setState(false);
             currOpID++;
             if (currOpID >= operations.Count)
+            {
                 currOpID = 0;
+            }
+            operations[currOpID].setState(true);
         }
     }
 
