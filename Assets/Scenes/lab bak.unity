@@ -6525,6 +6525,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f04e08c3068ece64fb9cd9d8d562c397, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventory:
+  - lumi_root
   operations: []
   uiRef: {fileID: 1678379557}
   clutterList:

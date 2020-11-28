@@ -12,11 +12,11 @@ public class CraftingModeManager : MonoBehaviour
 
     private List<Recipe> recipeList;
 
-
+    public List<string> inventory;//TODO: object class
 
     [SerializeField]
     private List<CraftingOperation> operations;
-
+    private int currOpID = 0;
 
     public UI_Lab uiRef;//TODO: ue this
 
@@ -43,17 +43,19 @@ public class CraftingModeManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        PlayerCamera.Instance.transform.LookAt(operations[currOpID].transform);
 
+        if (Input.GetKeyDown("1"))
+        {
+            currOpID++;
+            if (currOpID >= operations.Count)
+                currOpID = 0;
+        }
     }
 
     [SerializeField]
     private List<Clutter> clutterList;
 
-    public void clearNextClutter()
-    {
-        clutterList[0].clear();
-        clutterList.RemoveAt(0);
-    }
 
     public List<Recipe> getRecipesForTool(string toolType)
     {

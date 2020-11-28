@@ -17,7 +17,7 @@ public class IngredientWriter : MonoBehaviour
     void Update()
     {
         textbox.text = "";
-        foreach (string s in Player.Instance.inventory)
+        foreach (string s in CraftingModeManager.Instance.inventory)
             textbox.text += "- " + s + "\n";
     }
 }
