@@ -40,38 +40,7 @@ public class CraftingTool : Interaction
     // Update is called once per frame
     void Update()
     {
-        if (isActive)
-        {
-            if (steps.Count > currentStep)
-            {
-                if (Input.GetKeyDown(steps[currentStep]))
-                {
-                    UnityEngine.Debug.Log("completed step " + currentStep + " (" + steps[currentStep] + ")");
-                    currentStep++;
-                }
-            }
-            else
-            {
-                UnityEngine.Debug.Log("no more steps");
-                deactivate();
-            }
-        }
-    }
-
-    public override string activate()
-    {
-        UnityEngine.Debug.Log("getting: " + itemReward);
-        return base.activate();
-    }
-
-    public override void setReady(bool readyState)
-    {
-        isReady = readyState;
-
-        if (isReady)
-        {
-            UI_Lab.Instance.setActionTool(this);
-        }
+      
     }
 
 }
