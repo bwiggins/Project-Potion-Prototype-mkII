@@ -13,6 +13,7 @@ public class CraftingModeManager : MonoBehaviour
     private bool doneStartup = false;
     [SerializeField] private StationSelectUI choosingUI;
     [SerializeField] private GameObject enterUI;
+    [SerializeField] private GameObject leaveUI;
 
     [SerializeField]
     private float maxJoySnapDelay = 1;
@@ -106,12 +107,20 @@ public class CraftingModeManager : MonoBehaviour
                 if (doneStartup && Input.GetKeyDown("q") && curOp.isEnterable)
                 {
                     curOp.setState(true);
+                    enterUI.SetActive(false);
+                    leaveUI.SetActive(true);
                     isChoosing = false;
+
+                    List<Recipe> l = Recipe.getPossibleRecipes(recipeList, inventory, curOp.toolType);
+                    foreach(Recipe r in l)
+                        Debug.Log(r.write());
+                    Debug.Log("num r: " + l.Count);
                 }
 
                 doneStartup = true;
             }
 
+            //leaving
             else if(startingPop.isCompleted && !isChoosing)
             {
                 if (doneStartup && Input.GetKeyDown("e"))
@@ -119,6 +128,8 @@ public class CraftingModeManager : MonoBehaviour
                     CraftingOperation curOp = operations[currOpID];
                     curOp.setPreviewState(true);
                     isChoosing = true;
+                    enterUI.SetActive(true);
+                    leaveUI.SetActive(false);
                 }
             }
         }
@@ -127,7 +138,7 @@ public class CraftingModeManager : MonoBehaviour
     [SerializeField]
     private List<Clutter> clutterList;
 
-
+    //TODO: duplicate
     public List<Recipe> getRecipesForTool(string toolType)
     {
         List<Recipe> result = new List<Recipe>();    
@@ -201,6 +212,51 @@ public class Recipe
         //Debug.Log(recipeDebug);
 
         Debug.Log("LOADED - Recipe Data\n(click for details)\n\n" + Recipe.writeRecipeList(result));
+        return result;
+    }
+
+    //TODO: duplicate
+    public static List<Recipe> getStationRecipes(List<Recipe> recipes, string station)
+    {
+        List<Recipe> result = new List<Recipe>();
+
+        foreach (Recipe r in recipes)
+        {
+            if (r.toolType == station)
+                result.Add(r);
+        }
+
+        return result;
+    }
+
+    public static List<Recipe> getPossibleRecipes(List<Recipe> recipes, List<string> inv, string station)
+    {
+        List<Recipe> result = new List<Recipe>();
+
+        List<Recipe> stationRecipes = getStationRecipes(recipes, station);
+
+        foreach(Recipe r in stationRecipes)
+        {
+            bool isViable = false;
+            bool a = false;
+            bool b = false;
+            foreach(string s in inv)
+            {
+                if (s == r.ingredientA || r.ingredientA=="")
+                    a = true;
+                if (s == r.ingredientB || r.ingredientB=="")
+                    b = true;
+                if (a && b)
+                {
+                    isViable = true;
+                    break;
+                }
+            }
+
+            if (isViable)
+                result.Add(r);
+        }
+
         return result;
     }
 }

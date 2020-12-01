@@ -5,6 +5,7 @@ using UnityEngine;
 public class CraftingOperation : MonoBehaviour
 {
     public string displayName;
+    public string toolType;
     [SerializeField] private GameObject OperationPreview;
     [SerializeField] private GameObject OperationUI;
     public bool isEnterable;
