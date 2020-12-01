@@ -9,6 +9,12 @@ public class CraftingModeManager : MonoBehaviour
     private static CraftingModeManager _instance;
     public static CraftingModeManager Instance { get { return _instance; } }
 
+    private bool isChoosing = false;
+    [SerializeField] private StationSelectUI choosingUI;
+
+    [SerializeField]
+    private float maxJoySnapDelay = 1;
+    private float joySnapDelay = 0;
 
     private List<Recipe> recipeList;
 
@@ -19,6 +25,7 @@ public class CraftingModeManager : MonoBehaviour
     private int currOpID = 0;
 
     public UI_Lab uiRef;//TODO: ue this
+    public PopUp startingPop;
 
     private void Awake()
     {
@@ -43,17 +50,92 @@ public class CraftingModeManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        PlayerCamera.Instance.transform.LookAt(operations[currOpID].transform);
-
-        if (Input.GetKeyDown("1"))
+        if (startingPop)
         {
-            operations[currOpID].setState(false);
-            currOpID++;
-            if (currOpID >= operations.Count)
+            //TODO: there is an issue where the starting popup check doesnt work unless it is enabled from the start. I dont get it. Says completed internally, but not compkleted, externally
+            if (startingPop.isCompleted)
             {
-                currOpID = 0;
+                isChoosing = true;
+
+                PlayerCamera.Instance.transform.LookAt(operations[currOpID].transform);
+
+                if (isChoosing && !choosingUI.gameObject.activeInHierarchy)
+                    choosingUI.gameObject.SetActive(true);
+
+                //joystick input delay
+                joySnapDelay -= Time.deltaTime;
+                if (joySnapDelay <= 0)
+                {
+                    joySnapDelay = maxJoySnapDelay;
+
+                    float scroll = Input.GetAxis("Horizontal");
+                    if (scroll > 0)
+                    {
+                        operations[currOpID].setPreviewState(false);
+                        currOpID++;
+                        if (currOpID >= operations.Count)
+                        {
+                            currOpID = 0;
+                        }
+                        operations[currOpID].setPreviewState(true);
+                    }
+                    else if (scroll < 0)
+                    {
+                        operations[currOpID].setPreviewState(false);
+                        currOpID++;
+                        if (currOpID >= operations.Count)
+                        {
+                            currOpID = 0;
+                        }
+                        operations[currOpID].setPreviewState(true);
+                    }
+
+                    choosingUI.setName(operations[currOpID].displayName);
+                }
+
+                //measure joystick delay duration
+                /*float scroll = Input.GetAxis("Horizontal");
+                if (scroll > 0)
+                {
+                    if (joysnap <= 0)
+                        joysnap = maxJoySnap;//change in direction resets
+                    else
+                        joysnap += Time.deltaTime;//add up time until the max 
+                }
+                else if (scroll < 0)
+                {
+                    if (joysnap >= 0)
+                        joysnap = -maxJoySnap;//change in direction resets
+                    else
+                        joysnap -= Time.deltaTime;//add up time until the max 
+                }
+                else
+                    joysnap = 0;// if released, then we need to reset
+
+                //if joystick delay has crossed the threshold, we do someything and reset
+                if(joysnap >= maxJoySnap)
+                {
+                    joysnap = 0;
+                    operations[currOpID].setState(false);
+                    currOpID++;
+                    if (currOpID >= operations.Count)
+                    {
+                        currOpID = 0;
+                    }
+                    operations[currOpID].setState(true);
+                }
+                else if (joysnap <= -maxJoySnap)
+                {
+                    joysnap = 0;
+                    operations[currOpID].setState(false);
+                    currOpID++;
+                    if (currOpID >= operations.Count)
+                    {
+                        currOpID = 0;
+                    }
+                    operations[currOpID].setState(true);
+                }*/
             }
-            operations[currOpID].setState(true);
         }
     }
 
