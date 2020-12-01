@@ -7,6 +7,7 @@ public class CraftingOperation : MonoBehaviour
     public string displayName;
     [SerializeField] private GameObject OperationPreview;
     [SerializeField] private GameObject OperationUI;
+    public bool isEnterable;
 
     // Start is called before the first frame update
     void Start()

@@ -9,8 +9,10 @@ public class CraftingModeManager : MonoBehaviour
     private static CraftingModeManager _instance;
     public static CraftingModeManager Instance { get { return _instance; } }
 
-    private bool isChoosing = false;
+    private bool isChoosing = true;
+    private bool doneStartup = false;
     [SerializeField] private StationSelectUI choosingUI;
+    [SerializeField] private GameObject enterUI;
 
     [SerializeField]
     private float maxJoySnapDelay = 1;
@@ -44,7 +46,8 @@ public class CraftingModeManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        enterUI.SetActive(false);
+        choosingUI.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -53,14 +56,14 @@ public class CraftingModeManager : MonoBehaviour
         if (startingPop)
         {
             //TODO: there is an issue where the starting popup check doesnt work unless it is enabled from the start. I dont get it. Says completed internally, but not compkleted, externally
-            if (startingPop.isCompleted)
+            if (startingPop.isCompleted && isChoosing)
             {
-                isChoosing = true;
+ 
 
-                PlayerCamera.Instance.transform.LookAt(operations[currOpID].transform);
+            PlayerCamera.Instance.transform.LookAt(operations[currOpID].transform);
 
-                if (isChoosing && !choosingUI.gameObject.activeInHierarchy)
-                    choosingUI.gameObject.SetActive(true);
+            if (isChoosing && !choosingUI.gameObject.activeInHierarchy)
+                choosingUI.gameObject.SetActive(true);
 
                 //joystick input delay
                 joySnapDelay -= Time.deltaTime;
@@ -82,59 +85,41 @@ public class CraftingModeManager : MonoBehaviour
                     else if (scroll < 0)
                     {
                         operations[currOpID].setPreviewState(false);
-                        currOpID++;
-                        if (currOpID >= operations.Count)
+                        currOpID--;
+                        if (currOpID < 0)
                         {
-                            currOpID = 0;
+                            currOpID = operations.Count - 1;
                         }
                         operations[currOpID].setPreviewState(true);
                     }
 
                     choosingUI.setName(operations[currOpID].displayName);
+
+                    if (doneStartup && operations[currOpID].isEnterable)
+                        enterUI.SetActive(true);
+                    else
+                        enterUI.SetActive(false);
                 }
 
-                //measure joystick delay duration
-                /*float scroll = Input.GetAxis("Horizontal");
-                if (scroll > 0)
+                CraftingOperation curOp = operations[currOpID];
+                //selecting
+                if (doneStartup && Input.GetKeyDown("q") && curOp.isEnterable)
                 {
-                    if (joysnap <= 0)
-                        joysnap = maxJoySnap;//change in direction resets
-                    else
-                        joysnap += Time.deltaTime;//add up time until the max 
+                    curOp.setState(true);
+                    isChoosing = false;
                 }
-                else if (scroll < 0)
-                {
-                    if (joysnap >= 0)
-                        joysnap = -maxJoySnap;//change in direction resets
-                    else
-                        joysnap -= Time.deltaTime;//add up time until the max 
-                }
-                else
-                    joysnap = 0;// if released, then we need to reset
 
-                //if joystick delay has crossed the threshold, we do someything and reset
-                if(joysnap >= maxJoySnap)
+                doneStartup = true;
+            }
+
+            else if(startingPop.isCompleted && !isChoosing)
+            {
+                if (doneStartup && Input.GetKeyDown("e"))
                 {
-                    joysnap = 0;
-                    operations[currOpID].setState(false);
-                    currOpID++;
-                    if (currOpID >= operations.Count)
-                    {
-                        currOpID = 0;
-                    }
-                    operations[currOpID].setState(true);
+                    CraftingOperation curOp = operations[currOpID];
+                    curOp.setPreviewState(true);
+                    isChoosing = true;
                 }
-                else if (joysnap <= -maxJoySnap)
-                {
-                    joysnap = 0;
-                    operations[currOpID].setState(false);
-                    currOpID++;
-                    if (currOpID >= operations.Count)
-                    {
-                        currOpID = 0;
-                    }
-                    operations[currOpID].setState(true);
-                }*/
             }
         }
     }
