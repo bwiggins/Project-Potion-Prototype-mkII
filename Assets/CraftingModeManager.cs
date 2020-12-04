@@ -20,6 +20,7 @@ public class CraftingModeManager : MonoBehaviour
     private float joySnapDelay = 0;
 
     private List<Recipe> recipeList;
+    public Recipe targetRecipe;//the current selected recipe for crafting... can be null
 
     public List<string> inventory;//TODO: object class
     //TODO: make private since I have perfectly reasonable checking functions now
@@ -114,10 +115,7 @@ public class CraftingModeManager : MonoBehaviour
                         leaveUI.SetActive(true);
                         isChoosing = false;
 
-                        List<Recipe> l = Recipe.getPossibleRecipes(recipeList, inventory, curOp.toolType);
-                        foreach (Recipe r in l)
-                            Debug.Log(r.write());
-                        Debug.Log("num r: " + l.Count);
+                        getTargetRecipe(curOp.toolType);
                     }
 
                     doneStartup = true;
@@ -138,20 +136,8 @@ public class CraftingModeManager : MonoBehaviour
                     if(doneStartup && Input.GetKeyDown("r"))
                     {
                         CraftingOperation curOp = operations[currOpID];
-                        List<Recipe> l = Recipe.getPossibleRecipes(recipeList, inventory, curOp.toolType);
-                        bool foundNew = false;
-                        foreach(Recipe r in l)
-                        {
-                            if (!isInInventory(r.ingredientOutput) && r.ingredientOutput != "")
-                            {
-                                addToInventory(r.ingredientOutput);
-                                foundNew = true;
-                                break;
-                            }
-                        }
-
-                        if (!foundNew)
-                            Debug.Log("No Recipes to craft");
+                        addToInventory(targetRecipe.ingredientOutput);
+                        getTargetRecipe(curOp.toolType);
                     }
                 }
             }
@@ -208,6 +194,26 @@ public class CraftingModeManager : MonoBehaviour
         }
         else
             Debug.Log("Inventory item not added: " + item);
+    }
+
+    private void getTargetRecipe(string station)
+    {
+        List<Recipe> l = Recipe.getPossibleRecipes(recipeList, inventory, station);
+        targetRecipe = null;
+        foreach (Recipe r in l)
+        {
+            Debug.Log(r.write());
+            if (!isInInventory(r.ingredientOutput) &&
+                r.ingredientOutput != "" &&
+                targetRecipe == null)
+            {
+                targetRecipe = r;
+                Debug.Log("Target Recipe for: " + r.ingredientOutput);
+            }
+        }
+
+        if (targetRecipe == null)
+            Debug.Log("No new recipes to craft");
     }
 }
 
