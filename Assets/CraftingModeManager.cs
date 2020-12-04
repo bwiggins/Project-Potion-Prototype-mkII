@@ -22,6 +22,7 @@ public class CraftingModeManager : MonoBehaviour
     private List<Recipe> recipeList;
 
     public List<string> inventory;//TODO: object class
+    //TODO: make private since I have perfectly reasonable checking functions now
 
     [SerializeField]
     private List<CraftingOperation> operations;
@@ -57,79 +58,101 @@ public class CraftingModeManager : MonoBehaviour
         if (startingPop)
         {
             //TODO: there is an issue where the starting popup check doesnt work unless it is enabled from the start. I dont get it. Says completed internally, but not compkleted, externally
-            if (startingPop.isCompleted && isChoosing)
+            if (startingPop.isCompleted)
             {
- 
-
-            PlayerCamera.Instance.transform.LookAt(operations[currOpID].transform);
-
-            if (isChoosing && !choosingUI.gameObject.activeInHierarchy)
-                choosingUI.gameObject.SetActive(true);
-
-                //joystick input delay
-                joySnapDelay -= Time.deltaTime;
-                if (joySnapDelay <= 0)
+                if (isChoosing)
                 {
-                    joySnapDelay = maxJoySnapDelay;
 
-                    float scroll = Input.GetAxis("Horizontal");
-                    if (scroll > 0)
+
+                    PlayerCamera.Instance.transform.LookAt(operations[currOpID].transform);
+
+                    if (isChoosing && !choosingUI.gameObject.activeInHierarchy)
+                        choosingUI.gameObject.SetActive(true);
+
+                    //joystick input delay
+                    joySnapDelay -= Time.deltaTime;
+                    if (joySnapDelay <= 0)
                     {
-                        operations[currOpID].setPreviewState(false);
-                        currOpID++;
-                        if (currOpID >= operations.Count)
+                        joySnapDelay = maxJoySnapDelay;
+
+                        float scroll = Input.GetAxis("Horizontal");
+                        if (scroll > 0)
                         {
-                            currOpID = 0;
+                            operations[currOpID].setPreviewState(false);
+                            currOpID++;
+                            if (currOpID >= operations.Count)
+                            {
+                                currOpID = 0;
+                            }
+                            operations[currOpID].setPreviewState(true);
                         }
-                        operations[currOpID].setPreviewState(true);
-                    }
-                    else if (scroll < 0)
-                    {
-                        operations[currOpID].setPreviewState(false);
-                        currOpID--;
-                        if (currOpID < 0)
+                        else if (scroll < 0)
                         {
-                            currOpID = operations.Count - 1;
+                            operations[currOpID].setPreviewState(false);
+                            currOpID--;
+                            if (currOpID < 0)
+                            {
+                                currOpID = operations.Count - 1;
+                            }
+                            operations[currOpID].setPreviewState(true);
                         }
-                        operations[currOpID].setPreviewState(true);
+
+                        choosingUI.setName(operations[currOpID].displayName);
+
+                        if (doneStartup && operations[currOpID].isEnterable)
+                            enterUI.SetActive(true);
+                        else
+                            enterUI.SetActive(false);
                     }
 
-                    choosingUI.setName(operations[currOpID].displayName);
-
-                    if (doneStartup && operations[currOpID].isEnterable)
-                        enterUI.SetActive(true);
-                    else
-                        enterUI.SetActive(false);
-                }
-
-                CraftingOperation curOp = operations[currOpID];
-                //selecting
-                if (doneStartup && Input.GetKeyDown("q") && curOp.isEnterable)
-                {
-                    curOp.setState(true);
-                    enterUI.SetActive(false);
-                    leaveUI.SetActive(true);
-                    isChoosing = false;
-
-                    List<Recipe> l = Recipe.getPossibleRecipes(recipeList, inventory, curOp.toolType);
-                    foreach(Recipe r in l)
-                        Debug.Log(r.write());
-                    Debug.Log("num r: " + l.Count);
-                }
-
-                doneStartup = true;
-            }
-
-            //leaving
-            else if(startingPop.isCompleted && !isChoosing)
-            {
-                if (doneStartup && Input.GetKeyDown("e"))
-                {
                     CraftingOperation curOp = operations[currOpID];
-                    curOp.setPreviewState(true);
-                    isChoosing = true;
-                    enterUI.SetActive(true);
-                    leaveUI.SetActive(false);
+                    //selecting
+                    if (doneStartup && Input.GetKeyDown("q") && curOp.isEnterable)
+                    {
+                        curOp.setState(true);
+                        enterUI.SetActive(false);
+                        leaveUI.SetActive(true);
+                        isChoosing = false;
+
+                        List<Recipe> l = Recipe.getPossibleRecipes(recipeList, inventory, curOp.toolType);
+                        foreach (Recipe r in l)
+                            Debug.Log(r.write());
+                        Debug.Log("num r: " + l.Count);
+                    }
+
+                    doneStartup = true;
+                }
+                else//not choosing
+                {
+                    //leaving
+                    if (doneStartup && Input.GetKeyDown("e"))
+                    {
+                        CraftingOperation curOp = operations[currOpID];
+                        curOp.setPreviewState(true);
+                        isChoosing = true;
+                        enterUI.SetActive(true);
+                        leaveUI.SetActive(false);
+                    }
+
+                    //crafting
+                    if(doneStartup && Input.GetKeyDown("r"))
+                    {
+                        CraftingOperation curOp = operations[currOpID];
+                        List<Recipe> l = Recipe.getPossibleRecipes(recipeList, inventory, curOp.toolType);
+                        bool foundNew = false;
+                        foreach(Recipe r in l)
+                        {
+                            if (!isInInventory(r.ingredientOutput) && r.ingredientOutput != "")
+                            {
+                                addToInventory(r.ingredientOutput);
+                                foundNew = true;
+                                break;
+                            }
+                        }
+
+                        if (!foundNew)
+                            Debug.Log("No Recipes to craft");
+                    }
                 }
             }
         }
@@ -149,6 +172,43 @@ public class CraftingModeManager : MonoBehaviour
         }
         return result;
     }
+
+    /// <summary>
+    /// checks for the presence of a particular item, in player inventory
+    /// </summary>
+    /// <param name="item">the item to look for</param>
+    /// <returns>true if present</returns>
+    public bool isInInventory(string item)
+    {
+        bool result = false;
+
+        foreach(string s in inventory)
+        {
+            if (s == item)
+            {
+                result = true;
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    /// <summary>
+    /// item to add to the inventory
+    /// </summary>
+    /// <param name="item"></param>
+    public void addToInventory(string item)
+    {
+        //only add if it isnt already present
+        if (!isInInventory(item))
+        {
+            inventory.Add(item);
+            Debug.Log("Inventory Added: " + item);
+        }
+        else
+            Debug.Log("Inventory item not added: " + item);
+    }
 }
 
 public class Recipe
@@ -161,9 +221,13 @@ public class Recipe
     public string ingredientB;
     public string craftingActionType;
 
-    public string write()
+    public string write(string id = "")
     {
-        return ingredientOutput + " | " + toolType + " | " + ingredientA + " | " + ingredientB + " | " + craftingActionType;
+        string append = "";
+        if (id != "")
+            append = id + ") ";
+
+        return append + ingredientOutput + " | " + toolType + " | " + ingredientA + " | " + ingredientB + " | " + craftingActionType;
     }
 
     public static string writeHeading()
@@ -179,9 +243,13 @@ public class Recipe
     /// <returns></returns>
     public static string writeRecipeList(List<Recipe> recipeList, bool showHeader = true)
     {
+        int i = 0;
         string result = Recipe.writeHeading();
         foreach (Recipe r in recipeList)
-            result += "\n" + r.write();
+        {
+            result += "\n" + r.write(i.ToString());
+            i++;
+        }
         return result;
     }
 
