@@ -15,6 +15,10 @@ public class CraftingModeManager : MonoBehaviour
     [SerializeField] private GameObject enterUI;
     [SerializeField] private GameObject leaveUI;
 
+    private float tempCraftingTimer = 0;
+    [SerializeField] private float maxCraftingTimer = 2;
+    [SerializeField] UnityEngine.UI.Text tempCraftingTimerText;
+
     [SerializeField]
     private float maxJoySnapDelay = 1;
     private float joySnapDelay = 0;
@@ -133,16 +137,27 @@ public class CraftingModeManager : MonoBehaviour
                     }
 
                     //crafting
-                    if(doneStartup && Input.GetKeyDown("r") )
+                    if(doneStartup && Input.GetKeyDown("r") && tempCraftingTimer <= 0)
                     {
                         CraftingOperation curOp = operations[currOpID];
                         if (targetRecipe != null)
+                        {
                             addToInventory(targetRecipe.ingredientOutput);
+                            tempCraftingTimer = maxCraftingTimer;
+                        }
                         getTargetRecipe(curOp.toolType);
                     }
                 }
             }
         }
+
+        //guaranteed execution things
+        //below here
+        if (tempCraftingTimer > 0)
+            tempCraftingTimer -= Time.deltaTime;
+        else if (tempCraftingTimer < 0)
+            tempCraftingTimer = 0;
+        tempCraftingTimerText.text = tempCraftingTimer.ToString();
     }
 
     //TODO: duplicate
