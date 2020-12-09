@@ -133,10 +133,11 @@ public class CraftingModeManager : MonoBehaviour
                     }
 
                     //crafting
-                    if(doneStartup && Input.GetKeyDown("r"))
+                    if(doneStartup && Input.GetKeyDown("r") )
                     {
                         CraftingOperation curOp = operations[currOpID];
-                        addToInventory(targetRecipe.ingredientOutput);
+                        if (targetRecipe != null)
+                            addToInventory(targetRecipe.ingredientOutput);
                         getTargetRecipe(curOp.toolType);
                     }
                 }
@@ -187,10 +188,18 @@ public class CraftingModeManager : MonoBehaviour
         if (!isInInventory(item))
         {
             inventory.Add(item);
-            Debug.Log("Inventory Added: " + item);
+            Debug.Log("Inventory Added: " + item + "\nExpand for full Inv.\n" + getInventoryString());
         }
         else
             Debug.Log("Inventory item not added: " + item);
+    }
+
+    public string getInventoryString()
+    {
+        string result = "";
+        foreach (string s in inventory)
+            result += s + "\n";
+        return result;
     }
 
     private void getTargetRecipe(string station)
@@ -199,17 +208,17 @@ public class CraftingModeManager : MonoBehaviour
         targetRecipe = null;
         foreach (Recipe r in l)
         {
-            Debug.Log(r.write());
             if (!isInInventory(r.ingredientOutput) &&
                 r.ingredientOutput != "" &&
                 targetRecipe == null)
             {
                 targetRecipe = r;
-                Debug.Log("Target Recipe for: " + r.ingredientOutput);
             }
         }
 
-        if (targetRecipe == null)
+        if (targetRecipe != null)
+            Debug.Log("Target Recipe for: " + targetRecipe.ingredientOutput);
+        else
             Debug.Log("No new recipes to craft");
     }
 }
