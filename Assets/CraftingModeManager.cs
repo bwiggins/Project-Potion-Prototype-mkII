@@ -144,9 +144,6 @@ public class CraftingModeManager : MonoBehaviour
         }
     }
 
-    [SerializeField]
-    private List<Clutter> clutterList;
-
     //TODO: duplicate
     public List<Recipe> getRecipesForTool(string toolType)
     {

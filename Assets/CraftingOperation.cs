@@ -36,3 +36,5 @@ public class CraftingOperation : MonoBehaviour
         if (OperationPreview && isActive) OperationUI.SetActive(false);
     }
 }
+
+
