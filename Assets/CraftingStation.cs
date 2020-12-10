@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CraftingOperation : MonoBehaviour
+public class CraftingStation : MonoBehaviour
 {
     public string displayName;
     public string toolType;
-    [SerializeField] private GameObject OperationPreview;
-    [SerializeField] private GameObject OperationUI;
+    [SerializeField] protected GameObject OperationPreview;
+    [SerializeField] protected GameObject OperationUI;
     public bool isEnterable;
 
     // Start is called before the first frame update
@@ -34,6 +34,11 @@ public class CraftingOperation : MonoBehaviour
         if (OperationUI) OperationUI.SetActive(isActive);
 
         if (OperationPreview && isActive) OperationUI.SetActive(false);
+    }
+
+    public virtual void activate()
+    {
+
     }
 }
 

@@ -30,7 +30,7 @@ public class CraftingModeManager : MonoBehaviour
     //TODO: make private since I have perfectly reasonable checking functions now
 
     [SerializeField]
-    private List<CraftingOperation> operations;
+    private List<CraftingStation> operations;
     private int currOpID = 0;
 
     public UI_Lab uiRef;//TODO: ue this
@@ -110,7 +110,7 @@ public class CraftingModeManager : MonoBehaviour
                             enterUI.SetActive(false);
                     }
 
-                    CraftingOperation curOp = operations[currOpID];
+                    CraftingStation curOp = operations[currOpID];
                     //selecting
                     if (doneStartup && Input.GetKeyDown("q") && curOp.isEnterable)
                     {
@@ -129,7 +129,7 @@ public class CraftingModeManager : MonoBehaviour
                     //leaving
                     if (doneStartup && Input.GetKeyDown("e"))
                     {
-                        CraftingOperation curOp = operations[currOpID];
+                        CraftingStation curOp = operations[currOpID];
                         curOp.setPreviewState(true);
                         isChoosing = true;
                         enterUI.SetActive(true);
@@ -139,7 +139,8 @@ public class CraftingModeManager : MonoBehaviour
                     //crafting
                     if(doneStartup && Input.GetKeyDown("r") && tempCraftingTimer <= 0)
                     {
-                        CraftingOperation curOp = operations[currOpID];
+                        CraftingStation curOp = operations[currOpID];
+                        curOp.activate();//tempversion of this call
                         if (targetRecipe != null)
                         {
                             addToInventory(targetRecipe.ingredientOutput);
@@ -157,7 +158,7 @@ public class CraftingModeManager : MonoBehaviour
             tempCraftingTimer -= Time.deltaTime;
         else if (tempCraftingTimer < 0)
             tempCraftingTimer = 0;
-        tempCraftingTimerText.text = tempCraftingTimer.ToString();
+        tempCraftingTimerText.text = tempCraftingTimer.ToString("#.00");
     }
 
     //TODO: duplicate
