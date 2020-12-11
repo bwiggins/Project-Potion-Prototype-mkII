@@ -28,13 +28,15 @@ public class CraftingModeManager : MonoBehaviour
 
     public List<string> inventory;//TODO: object class
     //TODO: make private since I have perfectly reasonable checking functions now
-
-    [SerializeField]
-    private List<CraftingStation> operations;
-    private int currOpID = 0;
-
     public UI_Lab uiRef;//TODO: ue this
+    
+
+
+    [Header("Stations")]
     public PopUp startingPop;
+    [SerializeField] private CraftingStation prep;
+    [SerializeField] private List<CraftingStation> stations;
+    private int currOpID = 0;
 
     private void Awake()
     {
@@ -69,7 +71,7 @@ public class CraftingModeManager : MonoBehaviour
                 {
 
 
-                    PlayerCamera.Instance.transform.LookAt(operations[currOpID].transform);
+                    PlayerCamera.Instance.transform.LookAt(stations[currOpID].transform);
 
                     if (isChoosing && !choosingUI.gameObject.activeInHierarchy)
                         choosingUI.gameObject.SetActive(true);
@@ -83,34 +85,34 @@ public class CraftingModeManager : MonoBehaviour
                         float scroll = Input.GetAxis("Horizontal");
                         if (scroll > 0)
                         {
-                            operations[currOpID].setPreviewState(false);
+                            stations[currOpID].setPreviewState(false);
                             currOpID++;
-                            if (currOpID >= operations.Count)
+                            if (currOpID >= stations.Count)
                             {
                                 currOpID = 0;
                             }
-                            operations[currOpID].setPreviewState(true);
+                            stations[currOpID].setPreviewState(true);
                         }
                         else if (scroll < 0)
                         {
-                            operations[currOpID].setPreviewState(false);
+                            stations[currOpID].setPreviewState(false);
                             currOpID--;
                             if (currOpID < 0)
                             {
-                                currOpID = operations.Count - 1;
+                                currOpID = stations.Count - 1;
                             }
-                            operations[currOpID].setPreviewState(true);
+                            stations[currOpID].setPreviewState(true);
                         }
 
-                        choosingUI.setName(operations[currOpID].displayName);
+                        choosingUI.setName(stations[currOpID].displayName);
 
-                        if (doneStartup && operations[currOpID].isEnterable)
+                        if (doneStartup && stations[currOpID].isEnterable)
                             enterUI.SetActive(true);
                         else
                             enterUI.SetActive(false);
                     }
 
-                    CraftingStation curOp = operations[currOpID];
+                    CraftingStation curOp = stations[currOpID];
                     //selecting
                     if (doneStartup && Input.GetKeyDown("q") && curOp.isEnterable)
                     {
@@ -129,7 +131,7 @@ public class CraftingModeManager : MonoBehaviour
                     //leaving
                     if (doneStartup && Input.GetKeyDown("e"))
                     {
-                        CraftingStation curOp = operations[currOpID];
+                        CraftingStation curOp = stations[currOpID];
                         curOp.setPreviewState(true);
                         isChoosing = true;
                         enterUI.SetActive(true);
@@ -139,7 +141,7 @@ public class CraftingModeManager : MonoBehaviour
                     //crafting
                     if(doneStartup && Input.GetKeyDown("r") && tempCraftingTimer <= 0)
                     {
-                        CraftingStation curOp = operations[currOpID];
+                        CraftingStation curOp = stations[currOpID];
                         curOp.activate();//tempversion of this call
                         if (targetRecipe != null)
                         {

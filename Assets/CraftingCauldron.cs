@@ -8,6 +8,7 @@ public class CraftingCauldron : CraftingStation
     [SerializeField] protected List<GameObject> candles;
     [SerializeField] protected GameObject candleReplacement;
     [SerializeField] protected int candlesLit = 0;
+    [SerializeField] private GameObject subStation;
 
     // Start is called before the first frame update
     void Start()
