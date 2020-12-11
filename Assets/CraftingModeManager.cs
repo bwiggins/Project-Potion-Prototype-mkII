@@ -9,11 +9,10 @@ public class CraftingModeManager : MonoBehaviour
     private static CraftingModeManager _instance;
     public static CraftingModeManager Instance { get { return _instance; } }
 
-    private bool isChoosing = true;
-    private bool doneStartup = false;
-    [SerializeField] private StationSelectUI choosingUI;
-    [SerializeField] private GameObject enterUI;
-    [SerializeField] private GameObject leaveUI;
+    private bool isChoosing = true;//TODO: remove
+    [SerializeField] private StationSelectUI choosingUI;//TODO: remove
+    [SerializeField] private GameObject enterUI;//TODO: remove
+    [SerializeField] private GameObject leaveUI;//TODO: remove
 
     private float tempCraftingTimer = 0;
     [SerializeField] private float maxCraftingTimer = 2;
@@ -29,14 +28,19 @@ public class CraftingModeManager : MonoBehaviour
     public List<string> inventory;//TODO: object class
     //TODO: make private since I have perfectly reasonable checking functions now
     public UI_Lab uiRef;//TODO: ue this
-    
-
 
     [Header("Stations")]
     public PopUp startingPop;
-    [SerializeField] private CraftingStation prep;
-    [SerializeField] private List<CraftingStation> stations;
-    private int currOpID = 0;
+    [SerializeField] private CraftingStation stationPrep;
+    [SerializeField] private CraftingStation stationCrafting;
+    [SerializeField] private CraftingStation stationInventory;
+    [SerializeField] private CraftingStation stationNotes;
+    [SerializeField] private List<CraftingStation> stations;//TODO: remove
+    private int currOpID = 0;//TODO: remove
+
+    [Header("States")]
+    private bool doneStartup = false;
+    private bool doneHarvest = false;
 
     private void Awake()
     {
@@ -69,8 +73,6 @@ public class CraftingModeManager : MonoBehaviour
             {
                 if (isChoosing)
                 {
-
-
                     PlayerCamera.Instance.transform.LookAt(stations[currOpID].transform);
 
                     if (isChoosing && !choosingUI.gameObject.activeInHierarchy)
